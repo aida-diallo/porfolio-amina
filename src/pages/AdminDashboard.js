@@ -12,7 +12,6 @@ import * as api from '../services/api';
 const AdminDashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,6 +22,7 @@ const AdminDashboard = () => {
       return;
     }
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   const fetchData = async () => {

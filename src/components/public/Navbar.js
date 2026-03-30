@@ -47,8 +47,9 @@ const Navbar = () => {
         ].map(({ id, label }) => (
           <li key={id}>
             <a
+              href={`#${id}`}
               className={activeSection === id ? 'active' : ''}
-              onClick={() => scrollTo(id)}
+              onClick={(e) => { e.preventDefault(); scrollTo(id); }}
               style={{ cursor: 'pointer' }}
             >
               {label}
