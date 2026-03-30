@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import {
   FiHome, FiUser, FiGrid, FiStar, FiBriefcase, FiBookOpen, FiMail,
   FiLogOut, FiPlus, FiEdit2, FiTrash2, FiSave, FiLock, FiSettings,
-  FiUpload, FiFileText, FiCheckCircle
+  FiUpload, FiFileText, FiCheckCircle, FiMenu, FiX
 } from 'react-icons/fi';
 import { FaStethoscope } from 'react-icons/fa';
 import * as api from '../services/api';
@@ -12,6 +12,7 @@ import * as api from '../services/api';
 const AdminDashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -403,7 +404,11 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-layout">
-      <aside className="admin-sidebar">
+      <button className="admin-mobile-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+        {sidebarOpen ? <FiX /> : <FiMenu />}
+      </button>
+      {sidebarOpen && <div className="admin-sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-header">
           <h3><FaStethoscope style={{ marginRight: '0.5rem' }} />Amy Admin</h3>
           <p>Gestion du portfolio</p>
@@ -411,7 +416,7 @@ const AdminDashboard = () => {
         <ul className="admin-nav">
           {navItems.map(item => (
             <li key={item.path}>
-              <Link to={item.path} className={location.pathname === item.path ? 'active' : ''}>
+              <Link to={item.path} className={location.pathname === item.path ? 'active' : ''} onClick={() => setSidebarOpen(false)}>
                 <item.icon /> {item.label}
               </Link>
             </li>
